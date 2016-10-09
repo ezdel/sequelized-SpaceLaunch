@@ -1,0 +1,43 @@
+<h1>SPACE LAUNCH!</h1>
+<div>
+  <img src="assets/img/space_shuttle.jpg" alt="spaceship">
+</div>
+<div class="col-md-6">
+<h2>Spaceships on Launchpad</h2>
+  <ul>
+    {{#each ships}}
+      {{#unless this.launched}}
+        <li>
+          {{this.passengers}}
+          <form action="spaceships/update/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="launched" value="true">
+          <button class="btn btn-sm btn-danger pull-right" id="launch" type="submit">LAUNCH!</button>
+          </form>
+        </li>
+
+      {{/unless}}
+    {{/each}}
+  </ul>
+</div>
+
+<div class="col-md-6">
+  <h2>Spaceships in Space</h2>
+  <ul>
+    {{#each ships}}
+      {{#if this.launched}}
+        <li>
+         {{this.passengers}}
+        </li>
+     {{/if}}
+    {{/each}}
+  </ul>
+</div>
+
+<h2></h2>
+<form class="create-update-form" action="spaceships/create" method="POST">
+  <div class="form-group">
+    <label for="nextShip">Who Do You Want to Launch into Space?</label>
+    <input type="text" id="nextShip" name="passengers">
+    <button type="submit">Send to Launch Pad</button>
+  </div> 
+</form>
