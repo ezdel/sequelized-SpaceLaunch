@@ -1,6 +1,6 @@
-CREATE DATABASE spaceship_db;
+CREATE DATABASE spacelaunch_sequelize_db;
 
-USE spaceship_db;
+USE spacelaunch_sequelize_db;
 
 CREATE TABLE spaceships
 (

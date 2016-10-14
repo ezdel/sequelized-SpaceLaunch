@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var spaceship = require('../models/spaceships.js');
+var models = require('../models');
 
 
 router.get('/', function (req, res) {
@@ -8,30 +8,47 @@ router.get('/', function (req, res) {
 });
 
 router.get('/spaceships', function (req, res) {
-	spaceship.selectAll(function (data) {
-		var spaceshipObject = { ships: data };
-		res.render('index', spaceshipObject);
+	models.Spaceship.findAll({})
+	.then(function(spaceships) {
+		console.log(spaceships);
+		res.render('index', {
+      	spaceships: passengers
+    	});
 	});
 });
 
 router.post('/spaceships/create', function (req, res) {
-	spaceship.insertOne('passengers', req.body.passengers, function () {
+	models.Spaceship.create({
+		passengers: req.body.passengers
+		})
+		.then(function() {
 		res.redirect('/spaceships');
 	});
 });
 
 router.put('/spaceships/update/:id', function (req, res) {
-	var condition = 'id = ' + req.params.id;
-
-	spaceship.updateOne({ launched: req.body.launched }, condition, function () {
+	models.Spaceship.update({ 
+		launched: req.body.launched 
+		},
+		{ 
+		where: { id: req.params.id }
+	})
+	.then(function(result){
 		res.redirect('/spaceships');
+	}, function(rejectedPromiseError){
 	});
 });
 
 router.delete('/spaceships/delete/:id', function (req, res) {
 	var condition = 'id = ' + req.params.id;
 
-	spaceship.delete(condition, function () {
+	models.Spaceship.destroy({ 
+		launched: req.body.launched 
+		},
+		{ 
+		where: { id: req.params.id }
+	})
+	.then(function() {
 		res.redirect('/spaceships');
 	});
 });

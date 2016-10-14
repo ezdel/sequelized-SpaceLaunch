@@ -2,6 +2,9 @@ var express = require('express');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 
+var Spaceship = require("./models")["Spaceship"]
+Spaceship.sync();
+
 var app = express();
 
 app.use(express.static(process.cwd() + '/public'));
